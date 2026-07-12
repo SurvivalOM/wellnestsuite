@@ -1,0 +1,25 @@
+/* WellNest brand tokens v1 — shared palette for the family.
+   Apps may adopt any subset; nothing here overrides app internals. */
+:root {
+  --wn-green: #4f7d5f;        /* sage — primary brand */
+  --wn-green-deep: #3c614a;
+  --wn-green-soft: #dce9df;
+  --wn-cream: #faf7f2;        /* warm page background */
+  --wn-charcoal: #26312b;     /* ink */
+  --wn-amber: #c98a2d;        /* accent — warmth, never alarm */
+  --wn-line: #e5ded2;
+  --wn-radius: 14px;
+  --wn-radius-sm: 9px;
+  --wn-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wn-green: #7fb392;
+    --wn-green-deep: #9ecdb0;
+    --wn-green-soft: #24342a;
+    --wn-cream: #141a16;
+    --wn-charcoal: #e8ede9;
+    --wn-amber: #d9a457;
+    --wn-line: #2a352e;
+  }
+}
