@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which WellNest app is for me? — 3 quick questions | WellNest</title>
+<meta name="description" content="Answer three quick questions and find out which WellNest app fits you best today: Ayurveda Master, Yoga Magic, or Personal Health Mate. Honest routing, no email required.">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../brand/tokens.css">
+<link rel="stylesheet" href="../css/wellnest.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+<header class="site-head">
+  <a href="../" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+    <img class="mark" src="../assets/logo.svg" alt="" width="40" height="40">
+    <span class="name">WellNest</span>
+  </a>
+  <nav aria-label="Main"><a href="../#apps">The apps</a><a href="../#bundle">Founding Nest</a></nav>
+</header>
+
+<main id="main">
+<section class="land-hero" style="text-align:center;">
+  <h1>Which app is for you?</h1>
+  <p>Three questions, thirty seconds, one honest answer. No email needed.</p>
+</section>
+
+<section class="strip" aria-label="Quick comparison">
+  <table>
+    <tr><td>“I want to know my body type and eat right for it”</td><td><a href="../ayurveda-master/">Ayurveda Master →</a></td></tr>
+    <tr><td>“I want a daily practice for body and breath”</td><td><a href="../yoga-magic/">Yoga Magic →</a></td></tr>
+    <tr><td>“I want to stay ahead of health problems”</td><td><a href="../health-mate/">Personal Health Mate →</a></td></tr>
+  </table>
+</section>
+
+<div id="quiz" data-step="0">
+  <div class="quiz-q" id="q1">
+    <h3>1 of 3 — What do you want most right now?</h3>
+    <div class="quiz-opts">
+      <button data-a="ayur">To understand my nature — and eat, sleep and live in tune with it</button>
+      <button data-a="yoga">A daily practice that moves my body and calms my breath</button>
+      <button data-a="hm">To stay ahead of health problems before they start</button>
+    </div>
+  </div>
+  <div class="quiz-q hidden" id="q2">
+    <h3>2 of 3 — How do you like to learn or grow?</h3>
+    <div class="quiz-opts">
+      <button data-a="ayur">Structured lessons and quizzes I can master step by step</button>
+      <button data-a="yoga">Guided practice I simply follow along, day by day</button>
+      <button data-a="hm">Clear dashboards and small daily nudges</button>
+    </div>
+  </div>
+  <div class="quiz-q hidden" id="q3">
+    <h3>3 of 3 — How much time can you truly give each day?</h3>
+    <div class="quiz-opts">
+      <button data-a="ayur">About 10 quiet minutes of reading and reflection</button>
+      <button data-a="yoga">15–25 minutes of practice on my mat</button>
+      <button data-a="hm">Two-minute check-ins here and there</button>
+    </div>
+  </div>
+  <div class="quiz-result hidden" id="result"></div>
+</div>
+</main>
+
+<footer>
+  <div class="disclaimer"><strong>A caring reminder:</strong> WellNest apps are educational companions, not medical advice. For any medical concern, please talk to a qualified doctor.</div>
+  <div class="cols"><span>© 2026 WellNest</span><span><a href="../">Home</a></span></div>
+</footer>
+</div>
+<script src="../js/hub.js" defer></script>
+<script defer>
+document.addEventListener("DOMContentLoaded", function () {
+  var APPS = {
+    ayur: { name: "Ayurveda Master 🌿", url: "../ayurveda-master/", line: "Learn your prakriti and live by it — start with the free 20-question quiz." },
+    yoga: { name: "Yoga Magic 🧘", url: "../yoga-magic/", line: "One guided daily session for body and breath, with safety built in." },
+    hm:   { name: "Personal Health Mate 💚", url: "../health-mate/", line: "Your lifelong prevention companion — opening soon; the waitlist gets founding pricing." }
+  };
+  var score = { ayur: 0, yoga: 0, hm: 0 }, first = null, step = 1;
+  function show(id) { document.getElementById(id).classList.remove("hidden"); }
+  function hide(id) { document.getElementById(id).classList.add("hidden"); }
+  document.querySelectorAll(".quiz-opts button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var a = btn.getAttribute("data-a");
+      score[a]++;
+      if (step === 1 && !first) first = a;
+      hide("q" + step);
+      step++;
+      if (step <= 3) { show("q" + step); return; }
+      var order = Object.keys(score).sort(function (x, y) { return score[y] - score[x] || (x === first ? -1 : y === first ? 1 : 0); });
+      var top = APPS[order[0]], second = APPS[order[1]];
+      if (window.wnTrack) window.wnTrack("chooser_result_" + order[0]);
+      var r = document.getElementById("result");
+      r.innerHTML = "<h2>Your best first door: " + top.name + "</h2>" +
+        "<p>" + top.line + "</p>" +
+        "<p><a class='btn btn-solid' href='" + top.url + "'>Open " + top.name.replace(/ \S+$/, "") + "</a></p>" +
+        "<p style='margin-top:14px;'>Also worth a look: <a href='" + second.url + "'>" + second.name + "</a></p>" +
+        "<p class='formnote'>Want everything? The <a href='../#bundle'>Founding Nest bundle</a> covers the whole family at one honest price.</p>";
+      show("result");
+      r.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+});
+</script>
+</body>
+</html>
